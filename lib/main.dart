@@ -119,91 +119,216 @@ class LoginScreen extends StatefulWidget
 
 class _LoginScreenState extends State<LoginScreen>
 {
-  @override
-  Widget build(BuildContext context)
-  {
-    return const Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-            ],
-          ),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Login'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 24.0),
+            ElevatedButton(
+              onPressed: () {
+// Validate name and password here
+                String name = _nameController.text;
+                String password = _passwordController.text;
+
+                if (name.isNotEmpty && password.isNotEmpty) {
+                // Authenticate user and navigate to BMI calculator
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BMICalculatorScreen()),
+                );
+                } else {
+                // Show error message or handle invalid credentials
+                ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Please enter a valid name and password')),
+                );
+                }
+              },
+              child: Text('Login'),
+            ),
+            SizedBox(height: 16.0),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterScreen()),
+
+                );
+              },
+              child: Text('New Account'),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+
+
+
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+final TextEditingController _usernameController = TextEditingController();
+final TextEditingController _passwordController = TextEditingController();
+final TextEditingController _emailController = TextEditingController();
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('Register'),
+    ),
+    body: Padding(
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextField(
+            controller: _usernameController,
+            decoration: InputDecoration(
+              labelText: 'Username',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          SizedBox(height: 16.0),
+          TextField(
+            controller: _passwordController,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'Password',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          SizedBox(height: 16.0),
+          TextField(
+            controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              labelText: 'Email',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          SizedBox(height: 24.0),
+          ElevatedButton(
+            onPressed: () {
+// Validate username, password, and email here
+              String username = _usernameController.text;
+              String password = _passwordController.text;
+              String email = _emailController.text;
+
+              if (username.isNotEmpty
+              && password.isNotEmpty && email.isNotEmpty) {
+              // Register user and navigate to login screen
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+              );
+              } else {
+              // Show error message or handle invalid credentials
+              ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Please enter valid username, password, and email')),
+              );
+              }
+            },
+            child: Text('Continue'),
+          ),
+          SizedBox(height: 16.0),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Back to Your Account'),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 
 // ... signup screen code
 
 
-class HomeScreen extends StatefulWidget
-{
-  const HomeScreen({super.key});
 
+class GenderSelectionScreen extends StatefulWidget {
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  _GenderSelectionScreenState createState() => _GenderSelectionScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-{
-  double bmi = 0.0;
-  String bmiCategory = '';
-
-  // ... logic to retrieve BMI and category from shared preferences or Firebase
+class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
+  String selectedGender = '';
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BMI Calculator'),
+        title: Text('Gender Selection'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Your BMI: $bmi',
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () => setState(() => selectedGender = 'male'),
+                  child: Text('Male'),
+                ),
+                ElevatedButton(
+                  onPressed: () => setState(() => selectedGender = 'female'),
+                  child: Text('Female'),
+                ),
+              ],
             ),
-
-            const SizedBox(height: 16),
-
-            Text(
-              'BMI Category: $bmiCategory',
-              style: const TextStyle(
-                fontSize: 18,
-              ),
-            ),
-
-            const SizedBox(height: 32),
+            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: ()
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BMICalculatorScreen()),
-                );
+              onPressed: () {
+                if (selectedGender.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BMIInputScreen(
+                        selectedGender: selectedGender,
+                      ),
+                    ),
+                  );
+                } else {
+                  // Show a message indicating that gender selection is required
+                }
               },
-              child: const Text('Calculate BMI'),
-            ),
-
-            ElevatedButton(
-              onPressed: ()
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BMIHistoryScreen()),
-                );
-              },
-              child: const Text('View BMI History'),
+              child: Text('Continue'),
             ),
           ],
         ),
@@ -213,39 +338,72 @@ class _HomeScreenState extends State<HomeScreen>
 }
 
 
-class BMICalculatorScreen extends StatefulWidget
-{
-  const BMICalculatorScreen({super.key});
+class BMIInputScreen extends StatefulWidget {
+  final String selectedGender;
+
+  const BMIInputScreen({Key? key, required this.selectedGender}) : super(key: key);
 
   @override
-  State<BMICalculatorScreen> createState() => _BMICalculatorScreenState();
+  _BMIInputScreenState createState() => _BMIInputScreenState();
 }
 
-class _BMICalculatorScreenState extends State<BMICalculatorScreen>
-{
-  double height = 0.0;
-  double weight = 0.0;
+class _BMIInputScreenState extends State<BMIInputScreen> {
+  double bodyMass = 0.0;
+  double bodyHeight = 0.0;
+
+  final List<double> bodyMassOptions = [40, 50, 60, 70, 80, 90, 100];
+  final List<double> bodyHeightOptions = [150, 160, 170, 180, 190, 200];
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BMI Calculator'),
+        title: Text('BMI Input'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Height input field
-            // Weight input field
+            DropdownButtonFormField<double>(
+              value: bodyMass,
+              onChanged: (value) => setState(() => bodyMass = value!),
+              items: bodyMassOptions.map((value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Text(value.toString()),
+                );
+              }).toList(),
+              decoration: InputDecoration(labelText: 'Body Mass (kg)'),
+            ),
+            DropdownButtonFormField<double>(
+              value: bodyHeight,
+              onChanged: (value) => setState(() => bodyHeight = value!),
+              items: bodyHeightOptions.map((value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Text(value.toString()),
+                );
+              }).toList(),
+              decoration: InputDecoration(labelText: 'Body Height (cm)'),
+            ),
             ElevatedButton(
-              onPressed: ()
-              {
-                // Calculate BMI and navigate to Home Screen
+              onPressed: () {
+                if (bodyMass > 0 && bodyHeight > 0) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BMIResultScreen(
+                        bodyMass: bodyMass,
+                        bodyHeight: bodyHeight,
+                      ),
+                    ),
+                  );
+                } else {
+                  // Show a message indicating that both body mass and height are required
+                }
               },
-              child: const Text('Calculate BMI'),
+              child: Text('Calculate BMI'),
             ),
           ],
         ),
@@ -254,54 +412,48 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen>
   }
 }
 
-class BMIHistoryScreen extends StatefulWidget
-{
-  const BMIHistoryScreen({super.key});
+
+class BMIResultScreen extends StatelessWidget {
+  final double bodyMass;
+  final double bodyHeight;
+
+  const BMIResultScreen({Key? key, required this.bodyMass, required this.bodyHeight}) : super(key: key);
+
+  double calculateBMI() {
+    final heightInMeters = bodyHeight / 100;
+    return bodyMass / (heightInMeters * heightInMeters);
+  }
+
+  String getBMICategory(double bmi) {
+    if (bmi < 18.5) {
+      return 'Underweight';
+    } else if (bmi >= 18.5 && bmi < 25) {
+      return 'Normal';
+    } else if (bmi >= 25 && bmi < 30) {
+      return 'Overweight';
+    } else {
+      return 'Obese';
+    }
+  }
 
   @override
-  State<BMIHistoryScreen> createState() => _BMIHistoryScreenState();
-}
+  Widget build(BuildContext context) {
+    final bmi = calculateBMI();
+    final category = getBMICategory(bmi);
 
-class _BMIHistoryScreenState extends State<BMIHistoryScreen>
-{
-  // ... logic to retrieve BMI history from shared preferences or Firebase
-  List<dynamic> bmiHistory = [];
-
-  @override
-  Widget build(BuildContext context)
-  {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BMI History'),
+        title: Text('BMI Result'),
       ),
-      body: ListView.builder(
-        itemCount: bmiHistory.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text('BMI: ${bmiHistory[index]}'),
-            // ... display other relevant information
-          );
-        },
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Your BMI is: ${bmi.toStringAsFixed(2)}'),
+            Text('BMI Category: $category'),
+          ],
+        ),
       ),
-    );
-  }
-}
-
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget
-{
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context)
-  {
-    return MaterialApp(
-      title: 'BMI Calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashScreen(),
     );
   }
 }
