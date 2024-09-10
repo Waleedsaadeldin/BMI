@@ -126,30 +126,30 @@ class _LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Name',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 24.0),
+            const SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () {
 // Validate name and password here
@@ -160,27 +160,27 @@ class _LoginScreenState extends State<LoginScreen>
                 // Authenticate user and navigate to BMI calculator
                 Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BMICalculatorScreen()),
+                MaterialPageRoute(builder: (context) => GenderSelectionScreen()),
                 );
                 } else {
                 // Show error message or handle invalid credentials
                 ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Please enter a valid name and password')),
+                const SnackBar(content: Text('Please enter a valid name and password')),
                 );
                 }
               },
-              child: Text('Login'),
+              child: const Text('Login'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextButton(
               onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegisterScreen()),
+                    MaterialPageRoute(builder: (context) => const SignupScreen()),
 
                 );
               },
-              child: Text('New Account'),
+              child: const Text('New Account'),
             ),
           ],
         ),
@@ -199,81 +199,84 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
-final TextEditingController _usernameController = TextEditingController();
-final TextEditingController _passwordController = TextEditingController();
-final TextEditingController _emailController = TextEditingController();
+class _SignupScreenState extends State<SignupScreen>
+{
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: Text('Register'),
-    ),
-    body: Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            controller: _usernameController,
-            decoration: InputDecoration(
-              labelText: 'Username',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(height: 16.0),
-          TextField(
-            controller: _passwordController,
-            obscureText: true,
-            decoration: InputDecoration(
-              labelText: 'Password',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(height: 16.0),
-          TextField(
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              labelText: 'Email',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(height: 24.0),
-          ElevatedButton(
-            onPressed: () {
-// Validate username, password, and email here
-              String username = _usernameController.text;
-              String password = _passwordController.text;
-              String email = _emailController.text;
-
-              if (username.isNotEmpty
-              && password.isNotEmpty && email.isNotEmpty) {
-              // Register user and navigate to login screen
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LoginScreen()),
-              );
-              } else {
-              // Show error message or handle invalid credentials
-              ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Please enter valid username, password, and email')),
-              );
-              }
-            },
-            child: Text('Continue'),
-          ),
-          SizedBox(height: 16.0),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Back to Your Account'),
-          ),
-        ],
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Register'),
       ),
-    ),
-  );
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _usernameController,
+              decoration: const InputDecoration(
+                labelText: 'Username',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'Password',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 24.0),
+            ElevatedButton(
+              onPressed: () {
+// Validate username, password, and email here
+                String username = _usernameController.text;
+                String password = _passwordController.text;
+                String email = _emailController.text;
+
+                if (username.isNotEmpty
+                    && password.isNotEmpty && email.isNotEmpty) {
+                  // Register user and navigate to login screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                } else {
+                  // Show error message or handle invalid credentials
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please enter valid username, password, and email')),
+                  );
+                }
+              },
+              child: const Text('Continue'),
+            ),
+            const SizedBox(height: 16.0),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Back to Your Account'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 
@@ -293,7 +296,7 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gender Selection'),
+        title: const Text('Gender Selection'),
       ),
       body: Center(
         child: Column(
@@ -304,15 +307,15 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
               children: [
                 ElevatedButton(
                   onPressed: () => setState(() => selectedGender = 'male'),
-                  child: Text('Male'),
+                  child: const Text('Male'),
                 ),
                 ElevatedButton(
                   onPressed: () => setState(() => selectedGender = 'female'),
-                  child: Text('Female'),
+                  child: const Text('Female'),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 if (selectedGender.isNotEmpty) {
@@ -328,7 +331,7 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
                   // Show a message indicating that gender selection is required
                 }
               },
-              child: Text('Continue'),
+              child: const Text('Continue'),
             ),
           ],
         ),
@@ -358,34 +361,28 @@ class _BMIInputScreenState extends State<BMIInputScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BMI Input'),
+        title: const Text('BMI Input'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DropdownButtonFormField<double>(
-              value: bodyMass,
-              onChanged: (value) => setState(() => bodyMass = value!),
-              items: bodyMassOptions.map((value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value.toString()),
-                );
-              }).toList(),
-              decoration: InputDecoration(labelText: 'Body Mass (kg)'),
+              onChanged: (value) => setState(() => bodyMass = bodyMassOptions[value!.toInt()]),
+              items: List<DropdownMenuItem<double>>.generate(bodyMassOptions.length, (index) => DropdownMenuItem(
+                value: index.toDouble(),
+                child: Text(bodyMassOptions[index].toString()),
+              )),
+              decoration: const InputDecoration(labelText: 'Body Mass (kg)'),
             ),
             DropdownButtonFormField<double>(
-              value: bodyHeight,
-              onChanged: (value) => setState(() => bodyHeight = value!),
-              items: bodyHeightOptions.map((value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value.toString()),
-                );
-              }).toList(),
-              decoration: InputDecoration(labelText: 'Body Height (cm)'),
+              onChanged: (value) => setState(() => bodyHeight = bodyHeightOptions[value!.toInt()]),
+              items: List<DropdownMenuItem<double>>.generate(bodyHeightOptions.length, (index) => DropdownMenuItem(
+                value: index.toDouble(),
+                child: Text(bodyHeightOptions[index].toString()),
+              )),
+              decoration: const InputDecoration(labelText: 'Body Height (cm)'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -403,7 +400,7 @@ class _BMIInputScreenState extends State<BMIInputScreen> {
                   // Show a message indicating that both body mass and height are required
                 }
               },
-              child: Text('Calculate BMI'),
+              child: const Text('Calculate BMI'),
             ),
           ],
         ),
@@ -443,7 +440,7 @@ class BMIResultScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('BMI Result'),
+        title: const Text('BMI Result'),
       ),
       body: Center(
         child: Column(
@@ -454,6 +451,25 @@ class BMIResultScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget
+{
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return MaterialApp(
+      title: 'BMI Calculator',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const SplashScreen(),
     );
   }
 }
